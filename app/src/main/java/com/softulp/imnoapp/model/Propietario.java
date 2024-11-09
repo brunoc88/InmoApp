@@ -8,11 +8,12 @@ public class Propietario {
     private String clave;
     private String dni;
     private String telefono;
+    private boolean estado;
 
     // Constructor vacío
     public Propietario() { }
     // Constructor con parámetros
-    public Propietario(int id_propietario, String nombre, String apellido, String email, String clave, String dni, String telefono) {
+    public Propietario(int id_propietario, String nombre, String apellido, String email, String clave, String dni, String telefono,boolean estado) {
         this.id_propietario = id_propietario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -20,6 +21,7 @@ public class Propietario {
         this.clave = clave;
         this.dni = dni;
         this.telefono = telefono;
+        this.estado = estado;
     }
 
     // Métodos getter y setter
@@ -78,6 +80,9 @@ public class Propietario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public void setEstado(boolean estado){this.estado = estado;}
+    public boolean getEstado(){return estado;}
 }
 
 

@@ -33,12 +33,15 @@ public class PerfilFragment extends Fragment {
             public void onChanged(Propietario propietario) {
                 if (propietario != null) {
                     Log.d("PerfilFragment", "Propietario actualizado: " + propietario.toString());
-                    binding.etMail.setText(propietario.getEmail());
+                    binding.etId.setText(String.valueOf(propietario.getId_propietario()));
+
+                    binding.etEmail.setText(propietario.getEmail());
                     binding.etTelefono.setText(propietario.getTelefono());
                     binding.etNombre.setText(propietario.getNombre());
                     binding.etApellido.setText(propietario.getApellido());
                     binding.etClave.setText(propietario.getClave());
-                    String mail = binding.etMail.getText().toString();
+                    binding.etDni.setText(propietario.getDni());
+                    String mail = binding.etEmail.getText().toString();
                     Log.d("PerfilFragment", "Email obtenido del propietario: " + propietario.getEmail());
 
                 } else {
@@ -58,10 +61,11 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 binding.etClave.setEnabled(aBoolean);
-                binding.etMail.setEnabled(aBoolean);
+                binding.etEmail.setEnabled(aBoolean);
                 binding.etApellido.setEnabled(aBoolean);
                 binding.etNombre.setEnabled(aBoolean);
                 binding.etTelefono.setEnabled(aBoolean);
+                binding.etDni.setEnabled(aBoolean);
             }
         });
 
@@ -71,9 +75,11 @@ public class PerfilFragment extends Fragment {
                 Propietario propietario = new Propietario();
                 propietario.setApellido(binding.etApellido.getText().toString());
                 propietario.setNombre(binding.etNombre.getText().toString());
-                propietario.setEmail(binding.etMail.getText().toString());
+                propietario.setEmail(binding.etEmail.getText().toString());
                 propietario.setClave(binding.etClave.getText().toString());
                 propietario.setTelefono(binding.etTelefono.getText().toString());
+                propietario.setDni(binding.etDni.getText().toString());
+                propietario.setEstado(true);
                 vm.editarDatos(binding.btEditar.getText().toString(),propietario);
             }
         });

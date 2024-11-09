@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.softulp.imnoapp.model.Inmueble;
 import com.softulp.imnoapp.model.LoginView;
 import com.softulp.imnoapp.model.Propietario;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -57,7 +60,10 @@ public class ApiClient {
         Call<Propietario> get(@Header("Authorization") String token);
 
         @PUT("Propietario")
-        Call<Propietario> editar(@Header("Authorization")String token,@Body Propietario propietario);
+        Call<Propietario> editar(@Header("Authorization") String token, @Body Propietario propietario);
+
+        @GET("Inmobiliaria")
+        Call <List<Inmueble>>getInmuebles(@Header("Authorization")String token, @Body Inmueble inmueble);
     }
 
     public static void guardarToken(String token,Context context){

@@ -65,7 +65,8 @@ public class PerfilViewModel extends AndroidViewModel {
 
                 @Override
                 public void onFailure(Call<Propietario> call, Throwable throwable) {
-
+                    Log.e("PerfilViewModel", "Error al obtener perfil: " + throwable.getMessage());
+                    Toast.makeText(getApplication(), "Error al cargar el perfil", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -73,35 +74,38 @@ public class PerfilViewModel extends AndroidViewModel {
         }
     }
 
-    public void editarDatos(String boton,Propietario propietario){
-        if(boton.equals("Editar")){
+    public void editarDatos(String boton, Propietario propietario) {
+        if ("Editar".equals(boton)) {
             mGuardarPerfil.setValue("Guardar Perfil");
             mHabilitar.setValue(true);
-        }else{
+        } else if ("Guardar Perfil".equals(boton)) {
             mGuardarPerfil.setValue("Editar");
             mHabilitar.setValue(false);
 
             String token = ApiClient.leerToken(getApplication());
-            if(token != null){
+            if (token != null) {
                 ApiClient.InmobiliariaService api = ApiClient.getApiInmobiliariaService();
-                Call<Propietario> call = api.editar(token,propietario);
+                Call<Propietario> call = api.editar("Bearer " +token, propietario);
                 call.enqueue(new Callback<Propietario>() {
                     @Override
                     public void onResponse(Call<Propietario> call, Response<Propietario> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful() && response.body() != null) {
                             mPropietario.setValue(response.body());
                             Toast.makeText(getApplication(), "Propietario actualizado!", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
+                            Log.e("PerfilViewModel", "Error en la respuesta: " + response.code() + ", " + response.message());
                             Toast.makeText(getApplication(), "Error al actualizar Propietario!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Propietario> call, Throwable throwable) {
-                        Log.d("salida", "falla: " + throwable.getMessage());
+                        Log.e("PerfilViewModel", "Error al actualizar propietario: " + throwable.getMessage());
+                        Toast.makeText(getApplication(), "Error al actualizar propietario!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }
     }
+
 }
